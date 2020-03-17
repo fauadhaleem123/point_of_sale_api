@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_122701) do
+ActiveRecord::Schema.define(version: 2020_03_16_104540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(version: 2020_02_06_122701) do
     t.string "subdomain"
     t.string "logo"
     t.json "about_you"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.string "phone_number"
+    t.text "address"
+    t.text "details"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -125,7 +135,10 @@ ActiveRecord::Schema.define(version: 2020_02_06_122701) do
     t.datetime "updated_at", null: false
     t.bigint "item_id"
     t.integer "discount", default: 0
+    t.bigint "size_id"
+    t.string "sold_item_size"
     t.index ["invoice_id"], name: "index_sold_items_on_invoice_id"
+    t.index ["size_id"], name: "index_sold_items_on_size_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -173,4 +186,5 @@ ActiveRecord::Schema.define(version: 2020_02_06_122701) do
   add_foreign_key "item_sizes", "items"
   add_foreign_key "item_sizes", "sizes"
   add_foreign_key "sold_items", "invoices"
+  add_foreign_key "sold_items", "sizes"
 end

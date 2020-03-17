@@ -14,9 +14,12 @@ class Invoice < ApplicationRecord
       self.sold_items.each do |sold_item|
         sold_quantity = sold_item.quantity
         item = sold_item.item
-        new_quantity = item.current_stock - sold_quantity
-        raise Exception.new("#{item.name} capacity exceeded, remaining capacity is #{item.current_stock}") if new_quantity < 0
-        item.update_columns(current_stock: (new_quantity))
+        sizee_id = sold_item.size_id
+        item_size = item.item_sizes.find_by(size_id: sizee_id)
+        new_quantity = item_size.quantity - sold_quantity
+        # new_quantity = item.current_stock - sold_quantity
+        raise Exception.new("#{item.name} capacity exceeded, remaining capacity is #{item_size.quantity}") if new_quantity < 0
+        item_size.update_columns(quantity: (new_quantity))
       end
     end
   end

@@ -13,3 +13,4 @@ class ItemSize < ApplicationRecord
     end
   end
 end
+ 

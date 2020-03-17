@@ -1,4 +1,4 @@
-class ItemsCollection < BaseCollection
+class ItemsCollection < BaseCollection 
   def meta
     return { results: results } if params[:stock_by_category].present? || params[:sales_by_category].present?
 

@@ -9,3 +9,4 @@ class Api::V1::ItemSerializer < ActiveModel::Serializer
     ActiveModel::SerializableResource.new(object.item_sizes, each_serializer: Api::V1::ItemSizeSerializer)
   end
 end
+ 

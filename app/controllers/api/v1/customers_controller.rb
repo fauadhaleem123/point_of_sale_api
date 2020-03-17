@@ -37,4 +37,4 @@ class Api::V1::CustomersController < ApplicationController
     collection = CustomersCollection.new(params)
     collection.meta
   end
-end
+end 

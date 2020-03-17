@@ -3,6 +3,7 @@ class Api::V1::InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show]
 
   def index
+    puts "aa" * 1000
     render json: all_invoices.to_json(:include => [:sold_items => {:include => [:item]}])
   end
 
@@ -21,7 +22,7 @@ class Api::V1::InvoicesController < ApplicationController
       end
     else
       @invoice = current_user.invoices.new(invoice_params)
-      if @invoice.save
+      if @invoice.save!
         render json: @invoice, status: :created
       else
         render json: @invoice.errors, status: :unprocessable_entity
@@ -42,11 +43,13 @@ class Api::V1::InvoicesController < ApplicationController
     end
 
     def all_invoices
+      puts "aAAA" * 1000
+      puts params
       collection = InvoicesCollection.new(params)
       collection.meta
     end
 
     def invoice_params
-      params.require(:invoice).permit(:total, :status, :adjustment, :discount_id, sold_items_attributes: [:item_id, :unit_price, :quantity, :discount])
+      params.require(:invoice).permit(:total, :status, :adjustment, :discount_id, sold_items_attributes: [:item_id, :size_id , :sold_item_size,  :unit_price, :quantity, :discount])
     end
 end
